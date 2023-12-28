@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 set -ueo pipefail;
 
-apt-get update -y
-apt-get install -y build-essential
-
-cd /app
-pip3 install mysqlclient
-pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 
 python manage.py makemigrations
 python manage.py migrate

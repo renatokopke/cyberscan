@@ -22,6 +22,7 @@ DATABASE_HOST=cyberscan_mysql
 DATABASE_PORT=3306
 
 # -- DEV/PROD - Configuration of AWS S3
+AWS_UPLOAD_REPORT_ENABLED=False
 AWS_UPLOAD_BUCKET="cyberscan"
 AWS_UPLOAD_USERNAME="s3_cyberscan"
 AWS_UPLOAD_REGION="us-east-1"

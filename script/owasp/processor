@@ -16,13 +16,17 @@ REPORT_FILE=$TEMP_FILE
 REPORT_FILE_JSON="$TEMP_FILE.json"
 
 REPORT="report"
+DIR_TMP_REPORT="/tmp/report"
 
 [ ! -d "$REPORT" ] && mkdir -m 0777 $REPORT; sleep 2
 
-$docker ps -a -f status=exited -q | while read c; do $docker rm $c > /dev/null; done
-
 docker pull owasp/zap2docker-live
 
-mkdir -p /tmp/report && chmod 777 /tmp/$REPORT && chown ${whoami}:${whoami} /tmp/$REPORT
+mkdir -p $DIR_TMP_REPORT && chmod 777 /tmp/$REPORT && chown ${whoami}:${whoami} /tmp/$REPORT
 
-$docker run -v /tmp/$REPORT:/zap/wrk/:rw -t owasp/zap2docker-live zap-api-scan.py -t "$TARGET_URL" -g gen.conf -f openapi -d -r "$REPORT_FILE" -J "$REPORT_FILE_JSON"
+$docker run -v $DIR_TMP_REPORT:/zap/wrk:rw -t owasp/zap2docker-live zap-api-scan.py -t "$TARGET_URL" -g gen.conf -f openapi -d -r "$REPORT_FILE" -J "$REPORT_FILE_JSON"
+
+CONTAINER_ID=$(docker ps -lq)
+$docker cp $CONTAINER_ID:/zap/wrk/$REPORT_FILE $DIR_TMP_REPORT
+$docker cp $CONTAINER_ID:/zap/wrk/$REPORT_FILE_JSON $DIR_TMP_REPORT
+$docker rm $CONTAINER_ID

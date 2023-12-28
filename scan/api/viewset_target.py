@@ -33,13 +33,14 @@ class TargetView(generics.ListAPIView):
         expires = request.data['expires']
 
         obj_scan = EngineOWASP()
-        (link_report, link_expires_on, report_id, json_access_complexity_data) = obj_scan.scan(client_id, url, expires)
+        (link_report, link_expires_on, report_id, json_access_complexity_data, path_local_tmp_pdf) = obj_scan.scan(client_id, url, expires)
 
         json_resp = {
             "report_id": report_id,
             "access_complexity": json_access_complexity_data,
             "report": link_report,
             "expires": link_expires_on,
+            "path_local_tmp_pdf": path_local_tmp_pdf,
             "status_code": 201
         }
 

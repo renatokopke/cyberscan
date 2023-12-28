@@ -2,11 +2,13 @@ version: "3.7"
 services:
   cyberscan-scan_app:
     container_name: cyberscan_app
-    image: python:3.8
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
       - .:/app
+      - /tmp:/tmp
       - ./.env:/app/.env
     entrypoint: ["/bin/bash", "/app/docker/conf/entrypoint.sh"]
     restart: always

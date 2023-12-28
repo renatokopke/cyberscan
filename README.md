@@ -42,7 +42,7 @@ To start the container, navigate to the docker directory and run docker-compose:
 
 ```bash
 cd docker
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 ## Creating an Admin Account in Django
