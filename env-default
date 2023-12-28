@@ -1,0 +1,33 @@
+#
+# MODEL BASE: env-default
+#
+IS_ENVIROMENT_PRODUCTION=False
+REPORT_TITLE="CyberScan - Report Scan"
+
+# -- Security  Key Django Production and Develop
+# Command (Generate Secret Key):
+#     $python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+#
+DJANGO_SECRET_KEY='0igpoby8!2b^)l4k7%^q_so4&ms4(3*bo01tl+k2#26*6_icqv'
+DJANGO_DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost,0.0.0.0,*
+
+# -- Database settings
+DATABASE_NAME=scan
+DATABASE_PASSWORD=******
+DATABASE_USER=user_scan
+DATABASE_USER_PASSWORD=******
+DATABASE_HOST=mysql
+DATABASE_HOST=cyberscan_mysql
+DATABASE_PORT=3306
+
+# -- DEV/PROD - Configuration of AWS S3
+AWS_UPLOAD_BUCKET="cyberscan"
+AWS_UPLOAD_USERNAME="s3_cyberscan"
+AWS_UPLOAD_REGION="us-east-1"
+AWS_UPLOAD_ACCESS_KEY_ID="************"
+AWS_UPLOAD_SECRET_KEY='**************************'
+PRIVATE_STORAGE_UPLOAD="reports"
+PRIVATE_STORAGE_NAME="private"
+MEDIA_STORAGE_NAME="media"
+STATIC_STORAGE_NAME="static"

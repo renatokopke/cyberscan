@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  cyberscan-scan_app:
+    container_name: cyberscan_app
+    image: python:3.8
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - .:/app
+      - ./.env:/app/.env
+    entrypoint: ["/bin/bash", "/app/docker/conf/entrypoint.sh"]
+    restart: always
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8000"
+    depends_on:
+      - mysql
+    networks:
+      - net-scan
+
+  mysql:
+    container_name: cyberscan_mysql
+    image: mysql:8.0
+    command:
+      - --table_definition_cache=400
+      - --performance_schema=0
+      - --default-authentication-plugin=mysql_native_password
+      - --innodb_use_native_aio=0
+      - --default-authentication-plugin=caching_sha2_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_USER_PASSWORD}
+    volumes:
+      - ./docker/conf/my.cnf:/etc/my.cnf
+      - db_data:/var/lib/mysql
+      - ./docker/conf/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net-scan
+
+volumes:
+    db_data:
+
+# docker network create net-scan
+networks:
+  net-scan:
+    external: true

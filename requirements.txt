@@ -1,0 +1,19 @@
+django
+django-filter
+djangorestframework
+django-extensions
+django-rest-multiple-models
+pytz==2018.7
+python-decouple
+# Ref: https://pypi.org/project/mysqlclient/
+# Ubuntu - apt-get install python3-dev default-libmysqlclient-dev build-essential
+# AmazonLinux 2 - yum install gcc python3-devel mysql-devel
+# pip3 install mysqlclient
+mysqlclient==2.0.1
+# JSONField - https://django-mysql.readthedocs.io/en/latest/installation.html
+django-mysql==3.8.1
+beautifulsoup4
+boto3
+weasyprint
+pdfkit
+gunicorn
